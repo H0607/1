@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		
+	</head>
+	<body>
+		
+		<div id="app">
+			<input v-model="myDate" />
+			<p v-if="myDate=='1'||myDate=='3'||myDate=='5'||myDate=='7'||myDate=='8'||myDate=='10'||myDate=='12'">
+				{{myDate}}月有：31天
+			</p>
+			<p v-if="myDate=='4'||myDate=='6'||myDate=='9'||myDate=='11'">
+				{{myDate}}月有：30天
+			</p>
+			<p v-if="myDate=='2'">
+				{{myDate}}月在闰年有：29天
+				<br>
+				{{myDate}}月在非闰年有：28天
+			</p>
+		</div>
+		
+		
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			let v=new Vue({
+				el:'#app',
+				data:{
+					myDate:''
+				}
+			})
+		</script>
+	</body>
+</html>
