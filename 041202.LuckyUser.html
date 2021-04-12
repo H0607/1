@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			
+		<!-- @click="rdmNumber=Math.ceil(Math.random()*10)%3； 注意有分号---生成随机数1-3 -->
+		<input type="button" @click="rdmNumber=Math.ceil(Math.random()*10)%6;" name="" id="" value="随机抽取" />
+		   <div v-for="students"><!-- for循环输出 -->
+						姓名是：{{students[rdmNumber].name}}
+						<br>
+						学号是：{{students[rdmNumber].code}}
+			</div>
+		</div>
+		<script type="text/javascript">
+			let v=new Vue({
+				el:'#app',
+				data:{
+					rdmNumber:'1',
+					students:[
+						{name:'Tom',code:'1'},
+						{name:'Lisa',code:'2'},
+						{name:'Lili',code:'3'},
+						{name:'Luna',code:'4'},
+						{name:'Fleur',code:'5'},
+						{name:'Jerry',code:'6'}
+					]/* JSON代码 */
+				}
+			})
+		</script>
+	</body>
+</html>
