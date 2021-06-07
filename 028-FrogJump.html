@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="800" height="500"></canvas>
+		<div id="app">
+			<input type="text" v-model="userString" @click="show()" @keyup="show()" name="" id="" value="" />
+			<li>当前青蛙跳了{{foot}}次</li>
+		</div>
+		<script type="text/javascript">
+			let v=new Vue({
+				el:"#app",
+				data:{
+					userString:"",
+					foot:0,
+					a:0,
+					b:0,
+					c:0
+				},
+				methods:{
+					show(){
+						// 判断用户输入的字符串
+						//console.log(this.userString);
+						let canvas=document.getElementById("myCanvas");
+						let context=canvas.getContext("2d");
+						// 显示背景
+						let img_background=new Image();
+						img_background.src="./img/background.gif";
+						// 显示青蛙
+						let img_frog=new Image();
+						img_frog.src="./img/frog.gif";
+						// 清空画布
+						context.clearRect(0,0,800,500);
+						// 加载图片
+						img_background.onload=function(){
+							context.drawImage(img_background,0,0);
+						}
+						//控制青蛙的位置
+						if(v.a==0){	//还没跳到hello
+							img_frog.onload=function(){
+								context.drawImage(img_frog,250,280);
+							}
+						}else if(v.a==1 && v.b==0){	//已经跳到hello，还没跳到world
+							img_frog.onload=function(){
+								context.drawImage(img_frog,220,170);
+							}
+						}else if(v.a==1 && v.b==1 && v.c==0){	//已经跳到world，还没跳到hi
+							img_frog.onload=function(){
+								context.drawImage(img_frog,320,90);
+							}
+						}
+						//hello------220,170
+						if(this.userString=="hello"){
+							if(v.a==0){
+									img_frog.onload=function(){
+										context.drawImage(img_frog,220,170);
+									}
+									this.userString="";
+									v.foot++;
+									v.a++;
+							}else{
+								img_frog.onload=function(){
+									context.drawImage(img_frog,220,170);
+								}
+								alert("已经输过这个单词啦！");
+								this.userString="";
+							}
+						}
+						//world------320,90
+						if(this.userString=="world"){
+							if(v.b==0){
+								if(v.a==0 && v.c==0){ //控制青蛙，必须先跳到hello才可以到world，并且不能从hello直接到hi
+									alert("请按照荷叶的顺序，输入单词哦！");
+									this.userString="";
+								}else{
+									img_frog.onload=function(){
+										context.drawImage(img_frog,320,90);
+									}
+									this.userString="";
+									v.foot++;
+									v.b++;
+								}
+							}else{
+								img_frog.onload=function(){
+									context.drawImage(img_frog,320,90);
+								}
+								alert("已经输过这个单词啦！");
+								this.userString="";
+							}
+						}						
+						//hi------120,30
+						if(this.userString=="hi" && v.c==0){
+							if(v.a==0 && v.b==0 || v.a==1 && v.b==0){ //控制青蛙，必须先跳到world才可以到hi，不能从hello直接到hi
+								alert("请按照荷叶的顺序，输入单词哦！");
+								this.userString="";
+							}else{
+								img_frog.onload=function(){
+									context.drawImage(img_frog,120,30);
+								}
+								this.userString="";
+								v.foot++;
+								v.c++;
+								}
+						}
+						//延迟一秒弹出成功，否则过快看不到青蛙跳到hi处
+						if(v.foot==3){
+							setTimeout(function(){
+									alert("恭喜你，游戏通过啦!!!");
+									window.location.href="028-FrogJump.html";
+							},1000);
+						}
+						
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
